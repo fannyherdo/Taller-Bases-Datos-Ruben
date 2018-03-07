@@ -1,0 +1,249 @@
+MySQL Shell 8.0.3-dmr
+
+Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connecy -mc fanny@localhost
+          ... ;
+ERROR: Not connected.
+ MySQL  SQL > \connect -mc fanny@localhost
+Creating a Classic session to 'fanny@localhost'
+Enter password:
+Your MySQL connection id is 46
+Server version: 5.5.8-log MySQL Community Server (GPL)
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306  SQL > \use mundo
+Schema set to `mundo`.
+ MySQL  localhost:3306  mundo  SQL > create table  ciudades(
+                                 ... ciudades_id int not null auto_increment primary key,
+                                 ... nombre varchar(50),
+                                 ... ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 5
+ MySQL  localhost:3306  mundo  SQL > create table  ciudades(  ciudades_id int not null auto_increment primary key,  nombre varchar(50) not null,
+                                 ... poblacion int);
+Query OK, 0 rows affected (0.14 sec)
+ MySQL  localhost:3306  mundo  SQL > desc ciudades;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| ciudades_id | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre      | varchar(50) | NO   |     | NULL    |                |
+| poblacion   | int(11)     | YES  |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+3 rows in set (0.08 sec)
+ MySQL  localhost:3306  mundo  SQL > insert into ciudades(noombre, poblacion)values('CHIHUAHUA, 600000');
+ERROR: 1136 (21S01): Column count doesn't match value count at row 1
+ MySQL  localhost:3306  mundo  SQL > insert into ciudades(nombre, poblacion)values('CHIHUAHUA, 600000');
+ERROR: 1136 (21S01): Column count doesn't match value count at row 1
+ MySQL  localhost:3306  mundo  SQL > insert into ciudades(nombre, poblacion)values('CHIHUAHUA', 600000);
+Query OK, 1 row affected (0.10 sec)
+ MySQL  localhost:3306  mundo  SQL > select * from ciudades;
++-------------+-----------+-----------+
+| ciudades_id | nombre    | poblacion |
++-------------+-----------+-----------+
+|           1 | CHIHUAHUA |    600000 |
++-------------+-----------+-----------+
+1 row in set (0.00 sec)
+ MySQL  localhost:3306  mundo  SQL > insert into ciudades(poblacion)values(600000);
+Query OK, 1 row affected, 1 warning (0.08 sec)
+Warning (code 1364): Field 'nombre' doesn't have a default value
+ MySQL  localhost:3306  mundo  SQL > select * from ciudades;
++-------------+-----------+-----------+
+| ciudades_id | nombre    | poblacion |
++-------------+-----------+-----------+
+|           1 | CHIHUAHUA |    600000 |
+|           2 |           |    600000 |
++-------------+-----------+-----------+
+2 rows in set (0.00 sec)
+ MySQL  localhost:3306  mundo  SQL > create table oceanos(
+                                 ... oceano_id int not null key auto_increment,
+                                 ... nombre varchar(50) unique,
+                                 ... profundidad_media int defauly 3000);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'defauly 3000)' at line 7
+ MySQL  localhost:3306  mundo  SQL > create table oceanos(  oceanos_id int not null key auto_increment,  nombre varchar(50) unique,  profundidad_media int default 3000);
+Query OK, 0 rows affected (0.17 sec)
+ MySQL  localhost:3306  mundo  SQL > desc oceanos;
++-------------------+-------------+------+-----+---------+----------------+
+| Field             | Type        | Null | Key | Default | Extra          |
++-------------------+-------------+------+-----+---------+----------------+
+| oceanos_id        | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre            | varchar(50) | YES  | UNI | NULL    |                |
+| profundidad_media | int(11)     | YES  |     | 3000    |                |
++-------------------+-------------+------+-----+---------+----------------+
+3 rows in set (0.08 sec)
+ MySQL  localhost:3306  mundo  SQL > insert into oceanos(nombre, profundidad_media)values('pacifico',4000);
+Query OK, 1 row affected (0.09 sec)
+ MySQL  localhost:3306  mundo  SQL > select * from oceanos;
++------------+----------+-------------------+
+| oceanos_id | nombre   | profundidad_media |
++------------+----------+-------------------+
+|          1 | pacifico |              4000 |
++------------+----------+-------------------+
+1 row in set (0.00 sec)
+ MySQL  localhost:3306  mundo  SQL > insert into oceanos(nombre)values('indico');
+Query OK, 1 row affected (0.09 sec)
+ MySQL  localhost:3306  mundo  SQL > select * from oceanos;
++------------+----------+-------------------+
+| oceanos_id | nombre   | profundidad_media |
++------------+----------+-------------------+
+|          1 | pacifico |              4000 |
+|          2 | indico   |              3000 |
++------------+----------+-------------------+
+2 rows in set (0.00 sec)
+ MySQL  localhost:3306  mundo  SQL > insert into oceanos(nombre)values('indico');
+ERROR: 1062 (23000): Duplicate entry 'indico' for key 'nombre'
+ MySQL  localhost:3306  mundo  SQL >
+
+practica 4
+MySQL Shell 8.0.3-dmr
+
+Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect -mc root@localhost
+Creating a Classic session to 'root@localhost'
+Enter password:
+Your MySQL connection id is 44
+Server version: 5.5.8-log MySQL Community Server (GPL)
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| examen             |
+| examenlisto        |
+| gallitobd          |
+| mundo              |
+| mysql              |
+| performance_schema |
+| practica2azteca    |
+| practicagallitodb  |
+| test               |
++--------------------+
+10 rows in set (0.10 sec)
+ MySQL  localhost:3306  SQL > \use gallitobd
+Schema set to `gallitobd`.
+ MySQL  localhost:3306  gallitobd  SQL > show tables
+                                     ... ;
++---------------------+
+| Tables_in_gallitobd |
++---------------------+
+| bitcliente          |
+| cliente             |
+| empleado            |
+| inventario          |
+| proveedor           |
+| ventas              |
+| ventas_has_cliente  |
++---------------------+
+7 rows in set (0.00 sec)
+ MySQL  localhost:3306  gallitobd  SQL > create table mundo.copia_paises as select * from gallitobd.cliente;
+Query OK, 5 rows affected (0.24 sec)
+
+Records: 5  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306  gallitobd  SQL > \use mundo
+Schema set to `mundo`.
+ MySQL  localhost:3306  mundo  SQL > show tables;
++-----------------+
+| Tables_in_mundo |
++-----------------+
+| copia_paises    |
+| paises          |
+| paises_copia    |
++-----------------+                  create temporary table mundo.copia_paises_temp as select * from gallitobd.cliente;
+Query OK, 5 rows affected (0.09 sec) create temporary table mundo.copia_paises_tempo as select * from gallitobd.cliente;
+  ySQL  localhost:3306  mundo  SQL > create temporary table mundo.copia_paises_tempo as select * from gallitobd.cliente;
+Records: 5  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306  mundo  SQL > \use mundo
+Schema set to `mundo`.
+ MySQL  localhost:3306  mundo  SQL > show tables;
++-----------------+
+| Tables_in_mundo |
++-----------------+
+| copia_paises    |
+| paises          |
+| paises_copia    |
++-----------------+
+3 rows in set (0.00 sec)
+ MySQL  localhost:3306  mundo  SQL > create temporary table mundo.copia_paises_temp as select * from gallitobd.cliente;
+ERROR: 1050 (42S01): Table 'copia_paises_temp' already exists
+ MySQL  localhost:3306  mundo  SQL > select * from copia_paises_temp;
++------------+---------+------------------+------------------+-------------+---------------+--------+-------+-----------+
+| Id_cliente | nombre  | apellido_paterno | apellido_materno | rfc         | calle         | numero | cp    | ciudad    |
++------------+---------+------------------+------------------+-------------+---------------+--------+-------+-----------+
+|          1 | juan    | perez            | prado            | PAMP82010US | reforma       | 1655   | 31206 | chihuahua |
+|          2 | fanny   | hernandez        | dominguez        | DORS82011US | manzanas      | 2569   | 25178 | chihuahua |
+|          3 | gerardo | herrera          | magallanes       | GEHM78010US | independencia | 4578   | 25614 | madera    |
+|          4 | pedro   | paramo           | morelos          | PAMP82010US | romero        | 4578   | 31550 | madera    |
+|          5 | sandra  | rosas            | muoz            | SAMU82010US | concordia     | 5006   | 17849 | guerrero  |
++------------+---------+------------------+------------------+-------------+---------------+--------+-------+-----------+
+5 rows in set (0.00 sec)
+ MySQL  localhost:3306  mundo  SQL > \connect -mc fanny@localhost
+Creating a Classic session to 'fanny@localhost'
+Enter password:
+Closing old connection...
+Your MySQL connection id is 45
+Server version: 5.5.8-log MySQL Community Server (GPL)
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mundo              |
+| test               |
++--------------------+
+3 rows in set (0.00 sec)
+ MySQL  localhost:3306  SQL > create table comida_mundo(
+                          ... comida_id int,
+                          ... nombre_comida ENUM('tacos','burritos','carne asada','tlacoyos'),
+                          ... precio decimal(10,2));
+ERROR: 1046 (3D000): No database selected
+ MySQL  localhost:3306  SQL > \use mundo
+Schema set to `mundo`.
+ MySQL  localhost:3306  mundo  SQL > create table comida_mundo(  comida_id int,  nombre_comida ENUM('tacos','burritos','carne asada','tlacoyos'),  precio decimal(10,2));
+Query OK, 0 rows affected (0.19 sec)
+ MySQL  localhost:3306  mundo  SQL > desc comida_mundo
+                                 ... ;
++---------------+---------------------------------------------------+------+-----+---------+-------+
+| Field         | Type                                              | Null | Key | Default | Extra |
++---------------+---------------------------------------------------+------+-----+---------+-------+
+| comida_id     | int(11)                                           | YES  |     | NULL    |       |
+| nombre_comida | enum('tacos','burritos','carne asada','tlacoyos') | YES  |     | NULL    |       |
+| precio        | decimal(10,2)                                     | YES  |     | NULL    |       |
++---------------+---------------------------------------------------+------+-----+---------+-------+
+3 rows in set (0.08 sec)
+ MySQL  localhost:3306  mundo  SQL > insert into comida_mundo values(1,'burritos',10.2);
+Query OK, 1 row affected (0.13 sec)
+ MySQL  localhost:3306  mundo  SQL >
+ MySQL  localhost:3306  SQL > create database datos_personal
+                          ... ;
+Query OK, 1 row affected (0.01 sec)
+ MySQL  localhost:3306  SQL > \use datos_personal
+Schema set to `datos_personal`.
+ MySQL  localhost:3306  datos_personal  SQL > create table empleados
+                                          ... ;
+ERROR: 1113 (42000): A table must have at least 1 column
+ MySQL  localhost:3306  datos_personal  SQL > create table empleados(
+                                          ... clave_empleado int primary key auto_increment,
+                                          ... apellido varchar(50) not null,
+                                          ... nombre varchar(50) not null,
+                                          ... salario_min  int default 20000,
+                                          ... salario_max int,
+                                          ... departamento ENUM('sistemas','produccion','humanos','finanzas','jefes'),
+                                          ... clave_acceso
